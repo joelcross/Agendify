@@ -50,6 +50,7 @@ function updateSigninStatus(isSignedIn) {
 if (isSignedIn) {
     authorizeButton.style.display = 'none';
     signoutButton.style.display = 'block';
+    welcomeUser()
     listUpcomingEvents();
 } else {
     authorizeButton.style.display = 'block';
@@ -84,11 +85,24 @@ pre.appendChild(textContent);
 }
 
 /**
+ * Print a welcome message for the user once they have logged in.
+ */
+function welcomeUser() {
+    userName = 'Joel'
+    document.getElementById('welcomeMessage').innerHTML = 'Welcome, ' + userName + '! Here are some Spotify playlists for your day.';
+}
+
+
+/**
  * Print the summary and start datetime/date of the next ten events in
  * the authorized user's calendar. If no events are found an
  * appropriate message is printed.
  */
 function listUpcomingEvents() {
+document.getElementById('upcomingEvents').innerHTML = 'Upcoming Events:';
+document.getElementById("upcomingEvents").style.display = "block";
+document.getElementById("noEvents").style.display = "none";
+
 start = new Date();
 start.setHours(0,0,0,0);
 end = new Date();
@@ -103,6 +117,7 @@ gapi.client.calendar.events.list({
     'orderBy': 'startTime'
 }).then(function(response) {
     var events = response.result.items;
+    
 
     if (events.length > 0){
         for (i = 0; i < events.length; i++) {
@@ -144,9 +159,10 @@ gapi.client.calendar.events.list({
 
         }
     }
+    else:
+        document.getElementById('noEvents').innerHTML = 'No upcoming events found.';
+        document.getElementById("noEvents").style.display = "block";
     /*appendPre('Upcoming events:');
-
-
 
 
     if (events.length > 0) {
@@ -159,6 +175,8 @@ gapi.client.calendar.events.list({
         appendPre(event.summary + ' (' + when + ')')
     }
     } else {
+
+    }
     appendPre('No upcoming events found.');
     }*/
 });
