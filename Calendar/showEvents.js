@@ -118,10 +118,8 @@ gapi.client.calendar.events.list({
     if (events.length > 0){
         for (i = 0; i < events.length; i++) {
             var event = events[i];
-            //String playlist_url;
-            appendPre("A playlist for " + event.summary + ":");
-            //var noCorrespondingPlaylists = False;
             playlist_url = null;
+
             if (event.summary.toLowerCase().includes("study")){
                 playlist_url = "https://open.spotify.com/embed/playlist/37i9dQZF1DX8NTLI2TtZa6";
             }
@@ -148,6 +146,9 @@ gapi.client.calendar.events.list({
             }
             else if ((event.summary.toLowerCase().includes("shower"))||(event.summary.includes("get ready"))){
                 playlist_url = "https://open.spotify.com/embed/playlist/2QtbwqE8JcEp24augCTtjM";
+            }
+            else if ((event.summary.toLowerCase().includes("church"))||(event.summary.toLowerCase().includes("praise"))){
+                playlist_url = "https://open.spotify.com/embed/playlist/37i9dQZF1DXdrxKdrXE2Vk";
             }
  
             // append p element to HTML
