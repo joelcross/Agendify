@@ -88,7 +88,8 @@ pre.appendChild(textContent);
  * Print a welcome message for the user once they have logged in.
  */
 function welcomeUser() {
-    userName = 'Joel'
+    var profile = gapi.auth2.getAuthInstance().currentUser.get()
+    userName = profile.getBasicProfile().getName()
     document.getElementById('welcomeMessage').innerHTML = 'Welcome, ' + userName + '! Here are some Spotify playlists for your day.';
 }
 
@@ -99,8 +100,6 @@ function welcomeUser() {
  * appropriate message is printed.
  */
 function listUpcomingEvents() {
-document.getElementById('upcomingEvents').innerHTML = 'Upcoming Events:';
-document.getElementById("upcomingEvents").style.display = "block";
 document.getElementById("noEvents").style.display = "none";
 
 start = new Date();
@@ -118,7 +117,6 @@ gapi.client.calendar.events.list({
 }).then(function(response) {
     var events = response.result.items;
     
-
     if (events.length > 0){
         for (i = 0; i < events.length; i++) {
             var event = events[i];
@@ -159,9 +157,10 @@ gapi.client.calendar.events.list({
 
         }
     }
-    else:
-        document.getElementById('noEvents').innerHTML = 'No upcoming events found.';
+    else{
         document.getElementById("noEvents").style.display = "block";
+    }
+    
     /*appendPre('Upcoming events:');
 
 
