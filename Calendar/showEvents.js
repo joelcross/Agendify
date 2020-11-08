@@ -122,31 +122,31 @@ gapi.client.calendar.events.list({
             appendPre("A playlist for " + event.summary + ":");
             //var noCorrespondingPlaylists = False;
             playlist_url = null;
-            if (event.summary.includes("study")){
+            if (event.summary.toLowerCase().includes("study")){
                 playlist_url = "https://open.spotify.com/embed/playlist/37i9dQZF1DX8NTLI2TtZa6";
             }
-            else if ((event.summary.includes("gym"))||(event.summary.includes("workout"))){
+            else if ((event.summary.toLowerCase().includes("gym"))||(event.summary.includes("workout"))){
                 playlist_url = "https://open.spotify.com/embed/playlist/7bN9SOW0HJhzaXiukGKrM0";
             }
-            else if (event.summary.includes("run")){
+            else if (event.summary.toLowerCase().includes("run")){
                 playlist_url = "https://open.spotify.com/embed/playlist/4cgeOaRCHDkVDQPaDrRQFR";
             }
-            else if ((event.summary.includes("hangout"))||(event.summary.includes("chill"))){
+            else if ((event.summary.toLowerCase().includes("hangout"))||(event.summary.includes("chill"))){
                 playlist_url = 'https://open.spotify.com/embed/playlist/37i9dQZF1DX4WYpdgoIcn6';
             }
-            else if ((event.summary.includes("road trip"))||(event.summary.includes("drive"))){
+            else if ((event.summary.toLowerCase().includes("road trip"))||(event.summary.includes("drive"))){
                 playlist_url = 'https://open.spotify.com/embed/album/4INtVvtW2OSy4FsYislcw3';
             }
-            else if ((event.summary.includes("party"))||(event.summary.includes("pre"))||(event.summary.includes("go out"))){
+            else if ((event.summary.toLowerCase().includes("party"))||(event.summary.includes("pre"))||(event.summary.includes("go out"))){
                 playlist_url = "https://open.spotify.com/embed/playlist/6VdvufagCnB6BS52MxwPRw";
             }
-            else if ((event.summary.includes("dinner"))||(event.summary.includes("cooking"))){
+            else if ((event.summary.toLowerCase().includes("dinner"))||(event.summary.includes("cooking"))){
                 playlist_url = "https://open.spotify.com/embed/playlist/5ifODq96sBfaOY1mJKDr2I";
             }
-            else if ((event.summary.includes("breakfast"))||(event.summary.includes("lunch"))){
+            else if ((event.summary.toLowerCase().includes("breakfast"))||(event.summary.includes("lunch"))){
                 playlist_url = "https://open.spotify.com/embed/playlist/63I5Q0ljfj1CgVFGVAgpWy";
             }
-            else if ((event.summary.includes("shower"))||(event.summary.includes("get ready"))){
+            else if ((event.summary.toLowerCase().includes("shower"))||(event.summary.includes("get ready"))){
                 playlist_url = "https://open.spotify.com/embed/playlist/2QtbwqE8JcEp24augCTtjM";
             }
  
