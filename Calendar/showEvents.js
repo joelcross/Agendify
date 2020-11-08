@@ -99,8 +99,9 @@ function welcomeUser() {
  * appropriate message is printed.
  */
 function listUpcomingEvents() {
-    document.getElementById("upcomingEvents").style.display = "none";
-    document.getElementById("noEvents").style.display = "none";
+document.getElementById('upcomingEvents').innerHTML = 'Upcoming Events:';
+document.getElementById("upcomingEvents").style.display = "block";
+document.getElementById("noEvents").style.display = "none";
 
 start = new Date();
 start.setHours(0,0,0,0);
@@ -116,8 +117,52 @@ gapi.client.calendar.events.list({
     'orderBy': 'startTime'
 }).then(function(response) {
     var events = response.result.items;
-    document.getElementById('upcomingEvents').innerHTML = 'Upcoming Events:';
-    document.getElementById("upcomingEvents").style.display = "block";
+    
+
+    if (events.length > 0){
+        for (i = 0; i < events.length; i++) {
+            var event = events[i];
+            //String playlist_url;
+            appendPre("A playlist for " + event.summary + ":");
+
+            if (event.summary.includes("study")){
+                playlist_url = "https://open.spotify.com/playlist/37i9dQZF1DX8NTLI2TtZa6";
+            }
+            else if ((event.summary.includes("gym"))||(event.summary.includes("workout"))){
+                playlist_url = "https://open.spotify.com/playlist/7bN9SOW0HJhzaXiukGKrM0";
+            }
+            else if (event.summary.includes("run")){
+                playlist_url = "https://open.spotify.com/playlist/4cgeOaRCHDkVDQPaDrRQFR";
+            }
+            else if ((event.summary.includes("hangout"))||(event.summary.includes("chill"))){
+                playlist_url = 'https://open.spotify.com/playlist/37i9dQZF1DX4WYpdgoIcn6';
+            }
+            else if ((event.summary.includes("road trip"))||(event.summary.includes("drive"))){
+                playlist_url = 'https://open.spotify.com/album/4INtVvtW2OSy4FsYislcw3';
+            }
+            else if ((event.summary.includes("party"))||(event.summary.includes("pre"))||(event.summary.includes("go out"))){
+                playlist_url = "https://open.spotify.com/playlist/6VdvufagCnB6BS52MxwPRw";
+            }
+            else if ((event.summary.includes("dinner"))||(event.summary.includes("cooking"))){
+                playlist_url = "https://open.spotify.com/playlist/5ifODq96sBfaOY1mJKDr2I";
+            }
+            else if ((event.summary.includes("breakfast"))||(event.summary.includes("lunch"))){
+                playlist_url = "https://open.spotify.com/playlist/63I5Q0ljfj1CgVFGVAgpWy";
+            }
+            else if ((event.summary.includes("shower"))||(event.summary.includes("get ready"))){
+                playlist_url = "https://open.spotify.com/playlist/2QtbwqE8JcEp24augCTtjM";
+            }
+            else{
+                playlist_url = "No playlist for this event";
+            }
+            appendPre(playlist_url);
+
+        }
+    }
+    else:
+        document.getElementById('noEvents').innerHTML = 'No upcoming events found.';
+        document.getElementById("noEvents").style.display = "block";
+    /*appendPre('Upcoming events:');
 
 
     if (events.length > 0) {
@@ -130,9 +175,10 @@ gapi.client.calendar.events.list({
         appendPre(event.summary + ' (' + when + ')')
     }
     } else {
-        document.getElementById('noEvents').innerHTML = 'No upcoming events found.';
-        document.getElementById("noEvents").style.display = "block";
 
     }
+    appendPre('No upcoming events found.');
+    }*/
 });
 }
+
