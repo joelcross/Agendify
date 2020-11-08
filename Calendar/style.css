@@ -3,26 +3,66 @@
     src: url(fonts/gotham.ttf) format("truetype");
 }
 
+#heading {
+    margin: auto;
+    width: 35%;
+}
+
+h1 {
+    margin-bottom: 20px;
+}
+
+#logo {
+    float: right;
+    vertical-align: middle;   
+    height: 90px;
+    position: relative;
+    top: 50%;
+    transform: translateY(50%);
+}
+
 body {
-    font-family: 'Roboto', sans-serif;
+    font-family: 'DM Sans', sans-serif;
     font-weight: 400;
 }
 
 #Agendify {
     font-family: 'Gotham Medium';
-    font-size: 50px;
+    font-size: 80px;
     color: #1DB954;
     text-align: center;
+    float: left;
 }
 
 #welcomeMessage {
+    font-size: 20px;
     text-align: center;
-}
-
-#upcomingEvents {
-    font-weight: 700;
+    clear: both;
 }
 
 body #main {
-    margin-left: 20vw;
+
+    margin-left: 16vw;
+}
+
+#leftCell {
+    padding-right: 30px;
+    text-align: right;
+}
+
+#rightCell {
+    padding-left: 30px;
+
+    border-left-style: solid;
+    border-width: 3px;
+    border-color: #1DB954;
+}
+
+td {
+    padding-top: 30px;
+    padding-bottom: 30px;
+}
+
+#time {
+    font-weight: 700;
 }

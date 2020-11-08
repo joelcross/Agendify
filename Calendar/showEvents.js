@@ -50,7 +50,7 @@ function updateSigninStatus(isSignedIn) {
 if (isSignedIn) {
     authorizeButton.style.display = 'none';
     signoutButton.style.display = 'block';
-    welcomeUser()
+    welcomeUser();
     listUpcomingEvents();
 } else {
     authorizeButton.style.display = 'block';
@@ -90,7 +90,7 @@ pre.appendChild(textContent);
 function welcomeUser() {
     var profile = gapi.auth2.getAuthInstance().currentUser.get()
     userName = profile.getBasicProfile().getName()
-    document.getElementById('welcomeMessage').innerHTML = 'Welcome, ' + userName + '! Here are some Spotify playlists for your day.';
+    document.getElementById('welcomeMessage').innerHTML = 'Welcome, ' + userName + '! Here are some Spotify playlists for your day.' + "<br>";
 }
 
 
@@ -116,12 +116,21 @@ gapi.client.calendar.events.list({
     var events = response.result.items;
     
     if (events.length > 0){
+        // create table to organize times and their corresponding events
+        var table = document.createElement("TABLE");
+        table.id = 'table';
+        table.class = 'center';
+        var tableBody = document.createElement("TBODY");
+        tableBody.id = 'tableBody';
+
+        document.getElementById("main").appendChild(table);
+
+
+        // Iterate through user's scheduled events for the day
         for (i = 0; i < events.length; i++) {
             var event = events[i];
-            //String playlist_url;
-            appendPre("A playlist for " + event.summary + ":");
-            //var noCorrespondingPlaylists = False;
             playlist_url = null;
+            // Assign playlists to events
             if (event.summary.includes("study")){
                 playlist_url = "https://open.spotify.com/embed/playlist/37i9dQZF1DX8NTLI2TtZa6";
             }
@@ -153,35 +162,65 @@ gapi.client.calendar.events.list({
             // append p element to HTML
             var eventName = document.createElement("P");
             time = event.start.dateTime.substr(11, 5);
+            time.id = 'time';
 
-            // add playlist into HTML
             if (playlist_url != null) {
                 // create iframe element
                 var playlist = document.createElement("IFRAME");
                 // set iframe attributes
-                playlist.width = '600';
-                playlist.height = '300';
+                playlist.width = '500';
+                playlist.height = '250';
                 playlist.frameborder = '0';
                 playlist.allowtransparency = 'true';
                 playlist.allow = 'encrypted-media';
                 playlist.setAttribute('src', playlist_url)
 
-                eventName.innerText = time + ": " + event.summary;
-                document.getElementById("main").appendChild(eventName);
-                // append iframe element to HTML
-                document.getElementById("main").appendChild(playlist);
+                // create table row for event and playlist
+                var tableRow = document.getElementById("table").appendChild(document.createElement("TR"));
+                tableRow.id = 'tableRow';
+                // create cell for event name/time
+                var cell = document.getElementById("tableRow").appendChild(document.createElement("TD"));
+                cell.id = 'leftCell';
+                // create p element, set innerHTML
+                var timeDate = document.createElement("P");
+                timeDate.innerHTML = time + "<br>" + event.summary;
+                // add event name/time to cell
+                document.getElementById("leftCell").appendChild(timeDate);
+                // create another cell for the corresponding playlist
+                var cell2 = document.getElementById("tableRow").appendChild(document.createElement("TD"));
+                cell2.id = 'rightCell';
+                // append iframe element to new cell
+                document.getElementById("rightCell").appendChild(playlist);
 
             }
             else{
-                //var noEventsMessage = document.createElement("P");
-                eventName.innerText = time + ": " + event.summary + ": There are no playlists for this activities.";
-                document.getElementById("main").appendChild(eventName);
+                // create table row for event and playlist
+                var tableRow = document.getElementById("table").appendChild(document.createElement("TR"));
+                tableRow.id = 'tableRow';
+                // create cell for event name/time
+                var cell = document.getElementById("tableRow").appendChild(document.createElement("TD"));
+                cell.id = 'leftCell';
+                // create p element, set innerHTML
+                var timeDate = document.createElement("P");
+                timeDate.innerHTML = time + "<br>" + event.summary;
+                // add event name/time to cell
+                document.getElementById("leftCell").appendChild(timeDate);
+                // create another cell to display the "no playlists" message
+                var cell2 = document.getElementById("tableRow").appendChild(document.createElement("TD"));
+                cell2.id = 'rightCell';
+                // append "no playlists" message to cell
+                document.getElementById("rightCell").appendChild(document.createTextNode("There are no playlists for this activity."));
             }
-        }
+            tableBody.appendChild(tableRow);
+                    }
+        table.appendChild(tableBody);
     }
+    // No events scheduled- display "no events" message
     else{
-        document.getElementById("noEvents").style.display = "block";
-        }
+        var noEventsMessage = document.createElement("P");
+        noEventsMessage.innerText = "You have no events scheduled today.";
+        document.getElementById("main").appendChild(noEventsMessage);
+    }
     
 });
 }
