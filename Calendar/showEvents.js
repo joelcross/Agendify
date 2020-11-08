@@ -120,7 +120,7 @@ gapi.client.calendar.events.list({
             var event = events[i];
             //String playlist_url;
             appendPre("A playlist for " + event.summary + ":");
-
+            //var noCorrespondingPlaylists = False;
             playlist_url = null;
             if (event.summary.includes("study")){
                 playlist_url = "https://open.spotify.com/embed/playlist/37i9dQZF1DX8NTLI2TtZa6";
@@ -149,37 +149,40 @@ gapi.client.calendar.events.list({
             else if ((event.summary.includes("shower"))||(event.summary.includes("get ready"))){
                 playlist_url = "https://open.spotify.com/embed/playlist/2QtbwqE8JcEp24augCTtjM";
             }
+ 
+            // append p element to HTML
+            var eventName = document.createElement("P");
+            time = event.start.dateTime.substr(11, 5);
+
             // add playlist into HTML
             if (playlist_url != null) {
                 // create iframe element
                 var playlist = document.createElement("IFRAME");
                 // set iframe attributes
-                playlist.width = '300';
-                playlist.height = '380';
+                playlist.width = '600';
+                playlist.height = '300';
                 playlist.frameborder = '0';
                 playlist.allowtransparency = 'true';
                 playlist.allow = 'encrypted-media';
                 playlist.setAttribute('src', playlist_url)
 
-                // append p element to HTML
-                var eventName = document.createElement("P");
-                time = event.start.dateTime.substr(11, 5);
                 eventName.innerText = time + ": " + event.summary;
                 document.getElementById("main").appendChild(eventName);
                 // append iframe element to HTML
                 document.getElementById("main").appendChild(playlist);
 
             }
-            else {
-                var noEventsMessage = document.createElement("P");
-                noEventsMessage.innerText = "There are no playlists for today's activities."
-                document.getElementById("main").appendChild(noEventsMessage);
+            else{
+                //var noEventsMessage = document.createElement("P");
+                eventName.innerText = time + ": " + event.summary + ": There are no playlists for this activities.";
+                document.getElementById("main").appendChild(eventName);
             }
         }
     }
     else{
         document.getElementById("noEvents").style.display = "block";
-    }
+        }
+    
 });
 }
 
