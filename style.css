@@ -39,6 +39,7 @@ body {
 #signOut {
     float: right;
     margin-right: 200px;
+    display: none;
 }
 
 #heading {
